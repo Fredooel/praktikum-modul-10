@@ -6,35 +6,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $pageTitle }}</title>
     @vite('resources/sass/app.scss')
+    @vite('resources/js/app.js')
 </head>
 <body>
+
     <nav class="navbar navbar-expand-md navbar-dark bg-primary">
-        <div class="container">
-            <a href="{{ route('home') }}" class="navbar-brand mb-0 h1"><i class="bi-hexagon-fill
-me-2"></i> Data Master</a>
+    <div class="container">
+        <a href="{{ route('home') }}" class="navbar-brand mb-0 h1">
+            <i class="bi-hexagon-fill me-2"></i> Data Master
+        </a>
 
-            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs
-target="#navbarSupportedContent">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+        <button type="button" class="navbar-toggler"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                 <hr class="d-lg-none text-white-50">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav flex-row flex-wrap">
+                <li class="nav-item col-2 col-md-auto">
+                    <a href="{{ route('home') }}" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item col-2 col-md-auto">
+                    <a href="{{ route('employees.index') }}"
+                       class="nav-link active">Employee List</a>
+                </li>
+            </ul>
 
-                <ul class="navbar-nav flex-row flex-wrap">
-                    <li class="nav-item col-2 col-md-auto"><a href="{{ route('home') }}"
-class="nav-link">Home</a></li>
-                    <li class="nav-item col-2 col-md-auto"><a href="{{ route('employees.index') }}"
-class="nav-link active">Employee List</a></li>
-                </ul>
-
-                <hr class="d-lg-none text-white-50">
-
-                <a href="{{ route('profile') }}" class="btn btn-outline-light my-2 ms-md-auto"><i
-class="bi-person-circle me-1"></i> My Profile</a>
-            </div>
+            <a href="{{ route('profile') }}"
+               class="btn btn-outline-light my-2 ms-md-auto">
+                <i class="bi-person-circle me-1"></i> My Profile
+            </a>
         </div>
-    </nav>
+    </div>
+</nav>
 
     <div class="container mt-4">
         <div class="row mb-0">
@@ -50,98 +55,53 @@ Employee</a>
         </div>
         <hr>
         <div class="table-responsive border p-3 rounded-3">
-            <table class="table table-bordered table-hover table-striped mb-0 bg-white">
-                <thead>
-                    <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Email</th>
-                        <th>Age</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Louis</td>
-                        <td>Alfredo Elyas</td>
-                        <td>alfredoo.elys07@gmail.com</td>
-                        <td>19</td>
-                        <td>
-                            <div class="d-flex">
-                                <a href="{{ route('employees.show', ['employee' => 1]) }}"
-class="btn btn-outline-dark btn-sm me-2"><i class="bi-person
-lines-fill"></i></a>
-                                <a href="{{ route('employees.edit', ['employee' => 1]) }}"
-class="btn btn-outline-dark btn-sm me-2"><i class="bi-pencil
-square"></i></a>
+<table class="table table-bordered table-hover table-striped mb-0 bg-white">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Age</th>
+            <th>Position</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($employees as $employee)
+            <tr>
+                <td>{{ $employee->firstname }}</td>
+                <td>{{ $employee->lastname }}</td>
+                <td>{{ $employee->email }}</td>
+                <td>{{ $employee->age }}</td>
+                <td>{{ $employee->position_name }}</td>
+                <td>
+                    <div class="d-flex">
+                        <a href="{{ route('employees.show', ['employee' => $employee->employee_id]) }}"
+                            class="btn btn-outline-dark btn-sm me-2">
+                            <i class="bi-person-lines-fill"></i>
+                        </a>
 
-                                <div>
-                                    <form action="{{ route('employees.destroy', ['employee' =>
-1]) }}" method="POST">
-                                        @csrf
-                                        @method('delete')
-                                        <button type="submit" class="btn btn-outline-dark btn-sm
-me-2"><i class="bi-trash"></i></button>
-                                    </form>
-                                </div>
-                            </div>
-                             </td>
-                    </tr>
-                    <tr>
-                        <td>Pedri</td>
-                        <td>Gonzales</td>
-                        <td>Pedri.Gonzales8@gmail.com</td>
-                        <td>23</td>
-                        <td>
-                            <div class="d-flex">
-                                <a href="{{ route('employees.show', ['employee' => 2]) }}"
-class="btn btn-outline-dark btn-sm me-2"><i class="bi-person
-lines-fill"></i></a>
-                                <a href="{{ route('employees.edit', ['employee' => 2]) }}"
-class="btn btn-outline-dark btn-sm me-2"><i class="bi-pencil
-square"></i></a>
+                        <a href="{{ route('employees.edit', ['employee' => $employee->employee_id]) }}"
+                            class="btn btn-outline-dark btn-sm me-2">
+                            <i class="bi-pencil-square"></i>
+                        </a>
 
-                                <div>
-                                    <form action="{{ route('employees.destroy', ['employee' =>
-2]) }}" method="POST">
-                                        @csrf
-                                        @method('delete')
-                                        <button type="submit" class="btn btn-outline-dark btn-sm
-me-2"><i class="bi-trash"></i></button>
-                                    </form>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Lamine</td>
-                        <td>Yamal</td>
-                        <td>Lamine.Yamal10@gmail.com</td>
-                        <td>19</td>
-                        <td>
-                            <div class="d-flex">
-                                <a href="{{ route('employees.show', ['employee' => 3]) }}"
-class="btn btn-outline-dark btn-sm me-2"><i class="bi-person
-lines-fill"></i></a>
-                                <a href="{{ route('employees.edit', ['employee' => 3]) }}"
-class="btn btn-outline-dark btn-sm me-2"><i class="bi-pencil
-square"></i></a>
-
-                                <div>
-                                    <form action="{{ route('employees.destroy', ['employee' =>
-3]) }}" method="POST">
-                                        @csrf
-                                        @method('delete')
-                                        <button type="submit" class="btn btn-outline-dark btn-sm
-me-2"><i class="bi-trash"></i></button>
-                                    </form>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+                        <div>
+                            <form action="{{ route('employees.destroy', ['employee' => $employee->employee_id]) }}"
+                                method="POST">
+                                @csrf
+                                @method('delete')
+                                <button type="submit" class="btn btn-outline-dark btn-sm me-2">
+                                    <i class="bi-trash"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        @endforeach
+    </tbody>
+</table>        </div>
     </div>
 
     @vite('resources/js/app.js')
